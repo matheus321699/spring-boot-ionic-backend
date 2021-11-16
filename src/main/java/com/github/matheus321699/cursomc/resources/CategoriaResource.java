@@ -18,12 +18,21 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service; 
 	
+	
+	/* Utilizando o ResponseEntity: Em situações que precisamos ter mais controle 
+	 * sobre a resposta HTTP em um endpoint, o próprio Spring nos oferece a classe 
+	 * ResponseEntity que nos permite manipular os dados HTTP da resposta.
+	 */
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Categoria obj = service.buscar(id);
+		Categoria obj = service.find(id);
 		
 		return ResponseEntity.ok().body(obj);
 	
 	}
+	/*
+	 *  Handler: Objeto especial que intercepta a resposta HTTP caso ocorra uma exceção
+	 *  e lança uma reposta HTTP adequada, no caso 404. 
+	 */
 	
 }
