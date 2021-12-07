@@ -1,12 +1,16 @@
 package com.github.matheus321699.cursomc.resources;
 
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.github.matheus321699.cursomc.domain.Categoria;
 import com.github.matheus321699.cursomc.services.CategoriaService;
@@ -34,5 +38,30 @@ public class CategoriaResource {
 	 *  Handler: Objeto especial que intercepta a resposta HTTP caso ocorra uma exceção
 	 *  e lança uma reposta HTTP adequada, no caso 404. 
 	 */
+	
+	/*
+	 * Resposta HTTP sem corpo
+	*/
+	@RequestMapping(method = RequestMethod.POST)
+	/* 
+	 * @RequestBody: Anotação para que o objeto categoria seja construido a partir dos dados json
+	 * enviados.
+	*/
+	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+		/*
+		 * O protocolo HTTP quando ha uma inserção de um novo recurso, 
+		 * ele possui um código de reposta especial para isso. Para verificar
+		 * códigos de resposta HTTP basta digitar no goolgle http status code. No 
+		 * caso de inserção de um novo recurso o HTTP possui um código especial
+		 * 10.2.201 Create e retorna u URI do recurso adicionado.
+		 */
+		obj = service.insert(obj);
+		/*
+		 * Chamada que pega a URI do novo recurso que foi inserido
+		 */
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
 	
 }
