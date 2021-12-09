@@ -28,7 +28,7 @@ public class CategoriaResource {
 	 * ResponseEntity que nos permite manipular os dados HTTP da resposta.
 	 */
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		Categoria obj = service.find(id);
 		
 		return ResponseEntity.ok().body(obj);
@@ -49,7 +49,7 @@ public class CategoriaResource {
 	*/
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
 		/*
-		 * O protocolo HTTP quando ha uma inserção de um novo recurso, 
+		 * O protocolo HTTP quando há uma inserção de um novo recurso, 
 		 * ele possui um código de reposta especial para isso. Para verificar
 		 * códigos de resposta HTTP basta digitar no goolgle http status code. No 
 		 * caso de inserção de um novo recurso o HTTP possui um código especial
@@ -64,4 +64,10 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
 }
