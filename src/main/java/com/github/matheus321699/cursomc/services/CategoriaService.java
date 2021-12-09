@@ -4,10 +4,12 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.github.matheus321699.cursomc.domain.Categoria;
 import com.github.matheus321699.cursomc.repositories.CategoriaRepository;
+import com.github.matheus321699.cursomc.services.exceptions.DataIntegrityException;
 import com.github.matheus321699.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -41,6 +43,23 @@ public class CategoriaService {
 		// Verificando se o objeto existe com o método fin
 		find(obj.getId());
 		return repo.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		/*
+		 * Capturando exceção que é lançada quando um objeto que está associado
+		 * a outro objeto sofre uma tentativa de deleção, não permitindo que o
+		 * o objeto seja deletado.
+		 */
+		try {
+		repo.deleteById(id);
+		} 
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que "
+					+ "possui produto");
+		}
+		
 	}
 	
 }
