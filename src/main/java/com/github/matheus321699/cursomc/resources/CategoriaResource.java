@@ -2,6 +2,8 @@ package com.github.matheus321699.cursomc.resources;
 
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.github.matheus321699.cursomc.domain.Categoria;
+import com.github.matheus321699.cursomc.dto.CategoriaDTO;
 import com.github.matheus321699.cursomc.services.CategoriaService;
 
 @RestController
@@ -65,6 +68,13 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
+	/*
+	 * Em resumo, o @PathVariable é utilizado quando o valor da variável é passada diretamente na URL, 
+	 * mas não como um parametro que você passa após o sinal de interrogação (?) mas sim quando o valor 
+	 * faz parte da url.
+	 * 
+	 * A anotação @RequestBody indica que o valor do objeto virá do corpo da requisição;
+	 */
 	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
 		obj.setId(id);
 		obj = service.update(obj);
@@ -76,5 +86,23 @@ public class CategoriaResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 		
+	}
+	
+	// endpoint que retorna todas as categorias
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		/*
+		 * Covertendo Lista de Categorias para uma lista de 
+		 * CategoriaDTO.
+		 */
+		
+		List<Categoria>	list = service.findAll();
+		/*
+		 * Utilizando lista de Categoria para percorrer elementos
+		 * e intanciar o DTO correspondente a cada elemento.
+		 */
+		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
+	
 	}
 }

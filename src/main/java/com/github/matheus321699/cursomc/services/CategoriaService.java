@@ -1,7 +1,7 @@
 package com.github.matheus321699.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -60,6 +60,13 @@ public class CategoriaService {
 					+ "possui produto");
 		}
 		
+	}
+	/*
+	 * DTO(Data Tranfer Object) ou Objeto de Transferência de Dados: É um objeto que possui
+	 * somente os dados solicitados para alguma operação no sistema.
+	 */
+	public List<Categoria> findAll() {
+		return repo.findAll();
 	}
 	
 }

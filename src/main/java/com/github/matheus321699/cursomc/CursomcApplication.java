@@ -38,6 +38,7 @@ import com.github.matheus321699.cursomc.repositories.ProdutoRepository;
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner{
 
+	// @Autowired: Instancia automaticamente o objeto.
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	@Autowired
