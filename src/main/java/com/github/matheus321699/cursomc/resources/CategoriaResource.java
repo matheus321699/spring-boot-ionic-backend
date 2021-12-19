@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +54,7 @@ public class CategoriaResource {
 	 * @RequestBody: Anotação para que o objeto categoria seja construido a partir dos dados json
 	 * enviados.
 	*/
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDTO) {
 		/*
 		 * O protocolo HTTP quando há uma inserção de um novo recurso, 
 		 * ele possui um código de reposta especial para isso. Para verificar
@@ -60,6 +62,7 @@ public class CategoriaResource {
 		 * caso de inserção de um novo recurso o HTTP possui um código especial
 		 * 10.2.201 Create e retorna u URI do recurso adicionado.
 		 */
+		Categoria obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		/*
 		 * Chamada que pega a URI do novo recurso que foi inserido
@@ -77,7 +80,8 @@ public class CategoriaResource {
 	 * 
 	 * A anotação @RequestBody indica que o valor do objeto virá do corpo da requisição;
 	 */
-	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
+		Categoria obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
