@@ -1,6 +1,7 @@
 package com.github.matheus321699.cursomc.services;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class CategoriaService {
 	 * Método para atualizar dados no banco de dados
 	 */
 	public Categoria update(Categoria obj) {
-		// Verificando se o objeto existe com o método fin
+		// Verificando se o objeto existe com o método find
 		find(obj.getId());
 		return repo.save(obj);
 	}

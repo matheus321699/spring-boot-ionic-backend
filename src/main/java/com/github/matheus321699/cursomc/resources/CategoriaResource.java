@@ -71,7 +71,16 @@ public class CategoriaResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	/*
+	 *  Handler: Objeto especial que intercepta a resposta HTTP caso ocorra uma exceção
+	 *  e lança uma reposta HTTP adequada, no caso 404. 
+	 */
 	
+	
+	/*
+	 * O método de requisição HTTP PUT cria um novo recurso ou subsititui uma representação do recurso de 
+	 * destino com os novos dados.
+	 */
 	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
 	/*
 	 * Em resumo, o @PathVariable é utilizado quando o valor da variável é passada diretamente na URL, 
