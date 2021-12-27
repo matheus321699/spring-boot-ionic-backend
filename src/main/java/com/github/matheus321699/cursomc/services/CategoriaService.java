@@ -1,7 +1,6 @@
 package com.github.matheus321699.cursomc.services;
 
 import java.util.List;
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +45,9 @@ public class CategoriaService {
 	 */
 	public Categoria update(Categoria obj) {
 		// Verificando se o objeto existe com o método find
-		find(obj.getId());
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateDate(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Integer id) {
@@ -97,4 +97,7 @@ public class CategoriaService {
 		return new Categoria(objDTO.getId(), objDTO.getNome());
 	}
 	
+	private void updateDate(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
+	}
 }
