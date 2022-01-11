@@ -1,6 +1,7 @@
 package com.github.matheus321699.cursomc.resources;
 
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.github.matheus321699.cursomc.domain.Cliente;
 import com.github.matheus321699.cursomc.dto.ClienteDTO;
+import com.github.matheus321699.cursomc.dto.ClienteNewDTO;
 import com.github.matheus321699.cursomc.services.ClienteService;
 
 @RestController
@@ -44,6 +47,31 @@ public class ClienteResource {
 	 *  e lança uma reposta HTTP adequada, no caso 404. 
 	 */
 	
+	/*
+	 * Resposta HTTP sem corpo
+	*/
+	@RequestMapping(method = RequestMethod.POST)
+	/* 
+	 * @RequestBody: Anotação para que o objeto categoria seja construido a partir dos dados json
+	 * enviados.
+	*/
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO) {
+		/*
+		 * O protocolo HTTP quando há uma inserção de um novo recurso, 
+		 * ele possui um código de reposta especial para isso. Para verificar
+		 * códigos de resposta HTTP basta digitar no goolgle http status code. No 
+		 * caso de inserção de um novo recurso o HTTP possui um código especial
+		 * 10.2.201 Create e retorna u URI do recurso adicionado.
+		 */
+		Cliente obj = service.fromDTO(objDTO);
+		obj = service.insert(obj);
+		/*
+		 * Chamada que pega a URI do novo recurso que foi inserido
+		 */
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
 
 	/*
 	 * O método de requisição HTTP PUT cria um novo recurso ou subsititui uma representação do recurso de 
