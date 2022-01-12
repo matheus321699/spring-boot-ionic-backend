@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 import com.github.matheus321699.cursomc.domain.Cidade;
 import com.github.matheus321699.cursomc.domain.Cliente;
@@ -45,7 +44,7 @@ public class ClienteService {
 	/*
 	 * Método isert para inserir objeto no banco de dados 
 	 */
-	@TransactionalEventListener
+	@Transactional
 	public Cliente insert(Cliente obj) {
 		// Setar Id para garantir que o objeto inserido é um novo registro
 		obj.setId(null);
@@ -75,8 +74,8 @@ public class ClienteService {
 		repo.deleteById(id);
 		} 
 		catch(DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir porque há entidades"
-					+ " relacionadas!");
+			throw new DataIntegrityException("Não é possível excluir porque há pedidos"
+					+ " relacionados!");
 		}
 		
 	}
