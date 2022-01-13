@@ -1,20 +1,44 @@
 package com.github.matheus321699.cursomc.dto;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.github.matheus321699.cursomc.services.validation.ClienteInsert;
+
+/*
+ * Anotando o ClienteNewDTO com a anotação CLienteInsert criada
+ */
+@ClienteInsert
 public class ClienteNewDTO {
 	private static final long serialVersionUID = 1L;
 	
-
+	@NotEmpty(message="Preenchimento obrigatório!")
+	@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
+	
+
+	@NotEmpty(message="Preenchimento obrigatório!")
+	@Length
 	private String email;
+	
+	@NotEmpty(message="Preenchimento obrigatório!")
 	private String cpfOuCnpj;
+	
 	private Integer tipo;
 	
+	@NotEmpty(message="Preenchimento obrigatório!")
 	private String logradouro;
+	
+	@NotEmpty(message="Preenchimento obrigatório!")
 	private String numero;
 	private String complemento;
 	private String bairro;
+	
+	@NotEmpty
 	private String cep;
 	
+	@NotEmpty
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
@@ -24,6 +48,7 @@ public class ClienteNewDTO {
 	public ClienteNewDTO() {
 		
 	}
+	
 
 	public String getNome() {
 		return nome;

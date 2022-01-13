@@ -11,6 +11,9 @@ public class ClienteDTO  {
 	
 	private Integer id;
 	
+	/* 
+	 * Valições customizadas com o framework 
+	 */
 	@NotEmpty(message="Preenchimento obrigatório!")
 	@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
