@@ -8,4 +8,19 @@ import com.github.matheus321699.cursomc.domain.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 
+	/*
+	 * Criando operação ou método para realizar uma busca por email, 
+	 * utilizando recurso do Spring Data chamado padrão de nomes, ou 
+	 * seja ao cria um método com o nome findByEmail o Spring Data 
+	 * implementa automaticamente esse método, buscando um cliente
+	 * no banco de dados pelo email.
+	 */
+	/*
+	 * Anotação readOnly: anotação para que o método não necessite 
+	 * ser envolvido como uma transação de banco de dados, fazendo
+	 * com que fique mais rápido e diminui o locking do gerenciamento
+	 * de transações do banco de dados.
+	 */
+	Cliente findByEmail(String email);
+	
 }
