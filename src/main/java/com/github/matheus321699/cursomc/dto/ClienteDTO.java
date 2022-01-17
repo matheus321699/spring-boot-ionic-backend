@@ -5,7 +5,13 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.github.matheus321699.cursomc.domain.Cliente;
+import com.github.matheus321699.cursomc.services.validation.ClienteUpdate;
 
+/*
+ * Anotação personaliza para validar cliente no momento
+ * da inserção.
+ */
+@ClienteUpdate
 public class ClienteDTO  {
 	private static final long serialVersionUID = 1L;
 	

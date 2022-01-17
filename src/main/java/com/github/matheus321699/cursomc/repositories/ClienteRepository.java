@@ -16,11 +16,12 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 	 * no banco de dados pelo email.
 	 */
 	/*
-	 * Anotação readOnly: anotação para que o método não necessite 
+	 * Atribuito readOnly: anotação para que o método não necessite 
 	 * ser envolvido como uma transação de banco de dados, fazendo
 	 * com que fique mais rápido e diminui o locking do gerenciamento
 	 * de transações do banco de dados.
 	 */
+	@org.springframework.transaction.annotation.Transactional(readOnly = true)
 	Cliente findByEmail(String email);
 	
 }
