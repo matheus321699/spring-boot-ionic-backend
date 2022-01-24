@@ -117,6 +117,14 @@ public class Pedido implements Serializable{
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
 	}
+	
+	public void setInstante(Date instante) {
+		pedido = instante;
+	}
+	
+	public Date getInstante() {
+		return pedido;
+	}
 
 	@Override
 	public int hashCode() {

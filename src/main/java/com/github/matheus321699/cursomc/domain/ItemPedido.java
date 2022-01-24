@@ -26,16 +26,6 @@ public class ItemPedido implements Serializable {
 	public ItemPedido() {		
 	}
 	
-	@JsonIgnore
-	public Pedido getPedido() {
-		return id.getPedido();
-	}
-	
-
-	public Produto getProduto() {
-		return id.getProduto();
-	}
-
 	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
 		super();
 		id.setPedido(pedido);
@@ -43,6 +33,27 @@ public class ItemPedido implements Serializable {
 		this.desconto = desconto;
 		this.quantidade = quantidade;
 		this.preco = preco;
+	}
+	
+	@JsonIgnore
+	public Pedido getPedido() {
+		return id.getPedido();
+	}
+	
+	/*
+	 * Associando classe Produto a Pedido, para que a classe itemPedido
+	 * seja capaz de definir os pedidos e produtos associadas a ela
+	 */
+	public void setPedido(Pedido pedido) {
+		id.setPedido(pedido);
+	}
+
+	public Produto getProduto() {
+		return id.getProduto();
+	}
+	
+	public void setProduto(Produto produto) {
+		id.setProduto(produto);
 	}
 
 	/*
