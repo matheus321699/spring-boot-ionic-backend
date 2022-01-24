@@ -40,6 +40,10 @@ public class ResourceExceptionHandler {
 		
 		ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de validação", System.currentTimeMillis());
 		
+		/*
+		 * Percorre Lista de erros da excessão padrão do framework, pegando somente nome do campo
+		 * e a mensagem correspondente ao erro.
+		 */
 		for(FieldError x : e.getBindingResult().getFieldErrors()) {
 			err.addError(x.getField(), x.getDefaultMessage());
 		}
