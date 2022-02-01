@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.github.matheus321699.cursomc.services.DBService;
+import com.github.matheus321699.cursomc.services.EmailService;
+import com.github.matheus321699.cursomc.services.MockEmailService;
 
 /*
  * Classe de configuração: é uma classe que vai ter algum método ou
@@ -26,6 +28,10 @@ public class TestConfig {
 	@Autowired
 	private DBService dbService;
 	
+	/*
+	 * @Bean: Anotação para disponibilizar um método como um componente
+	 * no sistema.
+	 */
 	@Bean
 	/*
 	 * Método responsável por instanciar o meu banco de dados no
@@ -35,4 +41,10 @@ public class TestConfig {
 		dbService.instantiateTestDatabase();
 		return true;
 	}
+	
+	@Bean
+	public EmailService emailService() {
+		return new MockEmailService();
+	}
+	
 }

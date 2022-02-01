@@ -39,6 +39,13 @@ public class PedidoService {
 	private ClienteService clienteService;
 	
 	/*
+	 * Instancia do EmailService para pegar resposta do corpo do
+	 * email enviado.
+	 */
+	@Autowired
+	private EmailService emailService;
+	
+	/*
 	 * Método para buscar por Id
 	 */
 	public Pedido find(Integer id) {
@@ -77,7 +84,7 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		System.err.println(obj);
+		emailService.sendOrderConfimationEmail(obj);
 		return obj;
 	}
 }
