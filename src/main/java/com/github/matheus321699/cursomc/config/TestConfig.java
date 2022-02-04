@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.github.matheus321699.cursomc.services.DBService;
 import com.github.matheus321699.cursomc.services.EmailService;
-import com.github.matheus321699.cursomc.services.MockEmailService;
+import com.github.matheus321699.cursomc.services.SmtpEmailService;
 
 /*
  * Classe de configuração: é uma classe que vai ter algum método ou
@@ -44,7 +44,10 @@ public class TestConfig {
 	
 	@Bean
 	public EmailService emailService() {
-		return new MockEmailService();
+		
+	//	return new MockEmailService();
+		return new SmtpEmailService();
 	}
+	
 	
 }
