@@ -41,6 +41,14 @@ public class ProdutoResource {
 	 *  e lança uma reposta HTTP adequada, no caso 404. 
 	 */
 	
+	@RequestMapping(value = "/todos", method=RequestMethod.GET)
+	public ResponseEntity<List<Produto>> findAll() {
+		List<Produto> lista = service.findAll();
+		
+		return ResponseEntity.ok().body(lista);
+	
+	}
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<ProdutoDTO>> findPage(
 			/*

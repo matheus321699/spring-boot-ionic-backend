@@ -24,6 +24,11 @@ public class ProdutoService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
+	public List<Produto> findAll() {
+		List<Produto> lista = repo.findAll();
+		return lista;
+	}
+	
 	/*
 	 * Método para buscar por Id
 	 */

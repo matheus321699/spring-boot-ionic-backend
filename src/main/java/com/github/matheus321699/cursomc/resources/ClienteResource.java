@@ -34,6 +34,9 @@ public class ClienteResource {
 	/* Utilizando o ResponseEntity: Em situações que precisamos ter mais controle 
 	 * sobre a resposta HTTP em um endpoint, o próprio Spring nos oferece a classe 
 	 * ResponseEntity que nos permite manipular os dados HTTP da resposta.
+	 * 
+	 * @PathVariable: A anotação @PathVariable vincula o parâmetro passado pelo método
+	 *  com a variável do path
 	 */
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
@@ -52,6 +55,10 @@ public class ClienteResource {
 	*/
 	@RequestMapping(method = RequestMethod.POST)
 	/* 
+	 * @Valid: IIRC @Valid não é uma anotação Spring, mas uma anotação JSR-303 (que é o padrão Bean Validation). 
+	 * O que ele faz é basicamente verificar se os dados que você envia ao método são válidos ou não (isso validará 
+	 * o scriptFile para você).
+	 * 
 	 * @RequestBody: Anotação para que o objeto categoria seja construido a partir dos dados json
 	 * enviados.
 	*/
