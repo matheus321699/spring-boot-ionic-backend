@@ -58,6 +58,7 @@ public class PedidoService {
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
+		
 		// Usar Id para pegar cliente no banco de dados.
 		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);

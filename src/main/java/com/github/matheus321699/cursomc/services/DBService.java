@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.github.matheus321699.cursomc.domain.Categoria;
@@ -36,6 +37,11 @@ import com.github.matheus321699.cursomc.repositories.ProdutoRepository;
  */
 @Service
 public class DBService {
+	
+	// Injetando um BCryptPasswordEncoder para adicionar senha com encodada.
+	@Autowired
+	private BCryptPasswordEncoder pe;
+	
 	
 	// @Autowired: Instancia automaticamente o objeto.
 		@Autowired
@@ -122,7 +128,7 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
-		Cliente cli1 = new Cliente(null, "Maria Silva", "matheus260400@gmail.com", "35412565412", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "matheus260400@gmail.com", "35412565412", TipoCliente.PESSOAFISICA, pe.encode("123"));
 	
 		cli1.getTelefones().addAll(Arrays.asList("32245154", "98754132"));
 	
