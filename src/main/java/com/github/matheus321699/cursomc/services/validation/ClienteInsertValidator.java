@@ -17,7 +17,7 @@ import com.github.matheus321699.cursomc.services.validation.utils.BR;
 
 /*
  * Criando Validator personalizado para a anotação ClienteInsert
- * e para o ClienteNewDTO
+ * e para o ClienteNewDTO para validar CPF ou CNPJ
  */
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
 	

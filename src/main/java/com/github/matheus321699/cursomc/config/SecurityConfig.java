@@ -39,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			// Todo mundo que vim após desse caminho vai estar liberado
 			"/produtos/**",
-			"/categorias/**"
+			"/categorias/**",
+			"/clientes/**"
 	};
 	
 	@Override

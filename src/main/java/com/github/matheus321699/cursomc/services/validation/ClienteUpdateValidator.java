@@ -18,7 +18,7 @@ import com.github.matheus321699.cursomc.resources.exception.FieldMessage;
 
 /*
  * Criando Validator personalizado para a anotação ClienteInsert
- * e para o ClienteNewDTO
+ * e para o ClienteNewDTO para validar email.
  */
 public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
 	
