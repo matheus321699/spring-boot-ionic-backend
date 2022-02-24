@@ -7,21 +7,34 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
+import com.github.matheus321699.cursomc.security.JWTAuthenticationFilter;
+import com.github.matheus321699.cursomc.security.JWTUtil;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+	// Injetando interface UserDetailsService, o spring se encarrega
+	// de encontrar uma implementação da interface.
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
 	@Autowired
 	private Environment env;
+	
+	@Autowired
+	private JWTUtil jwtUtil;
 	
 	/*
 	 *  Definindo vetor que possui quais caminhos estarão liberados
@@ -40,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			// Todo mundo que vim após desse caminho vai estar liberado
 			"/produtos/**",
 			"/categorias/**",
-			"/clientes/**"
+			"/clientes/**", 
+			"/pedidos/**"
 	};
 	
 	@Override
@@ -65,6 +79,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
 		.anyRequest().authenticated();
 		
+		// Registrando filtro de autenticação
+		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		
 		/*
 		 * Configuração para assegurar que o nosso back end não
 		 * vai criar sessão de usuário.
@@ -87,10 +104,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		return (CorsConfigurationSource) source;
 	}
 	
+	/*
+	 * Método configure sobrescrito com sobrecarga para dizer quem é o UserDetails que estamos 
+	 * utilizando e quem é o algoritmo de retorno de codificação da senha, que no
+	 * caso é o bCryptPasswordEncoder().
+	 */
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+	}
+	
 	@Bean
 	// Utilizado para armazenar senha em forma de código no banco de dados
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-		
+	
 }

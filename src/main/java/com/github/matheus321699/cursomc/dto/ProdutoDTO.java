@@ -1,8 +1,10 @@
 package com.github.matheus321699.cursomc.dto;
 
+import java.io.Serializable;
+
 import com.github.matheus321699.cursomc.domain.Produto;
 
-public class ProdutoDTO {
+public class ProdutoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;

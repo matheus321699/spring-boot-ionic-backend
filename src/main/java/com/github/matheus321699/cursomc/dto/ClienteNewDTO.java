@@ -1,5 +1,7 @@
 package com.github.matheus321699.cursomc.dto;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
@@ -10,7 +12,7 @@ import com.github.matheus321699.cursomc.services.validation.ClienteInsert;
  * Anotando o ClienteNewDTO com a anotação CLienteInsert criada
  */
 @ClienteInsert
-public class ClienteNewDTO {
+public class ClienteNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@NotEmpty(message="Preenchimento obrigatório!")

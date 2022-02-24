@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SmtpEmailService extends AbstractEmailService {
 
 	@Autowired
 	/*
-	 * Calsse que permite instanciar um objeto com todos os dados passados para
+	 * Classe que permite instanciar um objeto com todos os dados passados para
 	 * o arquivo de propriedade.
 	 */
 	private MailSender mailSender;

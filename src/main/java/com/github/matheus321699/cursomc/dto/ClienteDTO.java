@@ -1,5 +1,7 @@
 package com.github.matheus321699.cursomc.dto;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
@@ -12,7 +14,7 @@ import com.github.matheus321699.cursomc.services.validation.ClienteUpdate;
  * da inserção.
  */
 @ClienteUpdate
-public class ClienteDTO  {
+public class ClienteDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
