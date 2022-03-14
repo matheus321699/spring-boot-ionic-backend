@@ -55,7 +55,7 @@ public class CategoriaResource {
 	 * @RequestBody: Anotação para que o objeto categoria seja construido a partir dos dados json
 	 * enviados.
 	*/
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')") // Anotação para liberar acesso ao enpoint com usuário ADMIN
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDTO) {
 		/*
 		 * O protocolo HTTP quando há uma inserção de um novo recurso, 

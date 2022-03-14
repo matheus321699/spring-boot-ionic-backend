@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.matheus321699.cursomc.domain.Cidade;
 import com.github.matheus321699.cursomc.domain.Cliente;
 import com.github.matheus321699.cursomc.domain.Endereco;
+import com.github.matheus321699.cursomc.domain.enums.Perfil;
 import com.github.matheus321699.cursomc.domain.enums.TipoCliente;
 import com.github.matheus321699.cursomc.dto.ClienteDTO;
 import com.github.matheus321699.cursomc.dto.ClienteNewDTO;
 import com.github.matheus321699.cursomc.repositories.ClienteRepository;
 import com.github.matheus321699.cursomc.repositories.EnderecoRepository;
+import com.github.matheus321699.cursomc.security.UserSS;
+import com.github.matheus321699.cursomc.services.exceptions.AuthorizationException;
 import com.github.matheus321699.cursomc.services.exceptions.DataIntegrityException;
 import com.github.matheus321699.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -41,6 +44,13 @@ public class ClienteService {
 	 * Método para buscar por Id
 	 */
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		
+		if(user==null || user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));		

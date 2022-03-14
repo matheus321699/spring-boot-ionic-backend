@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	 *  para acesso as URL's
 	 */
 	private static final String[] PUBLIC_MATCHERS = {
-			// Todo mundo que vim após desse caminho vai estar liberado
+			// Todo mundo que vim após esse caminho vai estar liberado
 			"/h2-console/**"
 	};
 	
@@ -56,8 +56,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			// Todo mundo que vim após desse caminho vai estar liberado
 			"/produtos/**",
 			"/categorias/**",
-			"/clientes/**", 
 			"/pedidos/**"
+	};
+	
+	private static final String[] PUBLIC_MATCHERS_POST = {
+			// Todo mundo que vim após esse caminho vai estar liberado
+			"/clientes/**"
 	};
 	
 	@Override
@@ -77,7 +81,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
 		
-		// Permitindo somente o método HTTP GET nos caminhos no vetor PUBLIC_MATCHERS_GET
+		// Permitindo somente o método HTTP POST nos caminhos no vetor PUBLIC_MATCHERS_GET
+		.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+		
+		// Permitindo somente o método HTTP GET nos caminhos no vetor PUBLIC_MATCHERS_POST
 		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
 		.anyRequest().authenticated();

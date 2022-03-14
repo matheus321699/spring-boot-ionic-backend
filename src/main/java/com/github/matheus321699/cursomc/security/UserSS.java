@@ -22,7 +22,10 @@ public class UserSS implements UserDetails{
 	private String email;
 	private String senha;
 	
-	// Lista interna de tipo de usuários que o Spring Security exige.
+	/*
+	 *  Lista interna de tipo de usuários que o Spring Security exige.
+	 *  Ou lista de usuários autorizados.
+	 */
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	public UserSS() {
@@ -84,6 +87,13 @@ public class UserSS implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+	
+	// Método para testar se o usuário possui o perfil pedido
+	public boolean hasRole(Perfil perfil) {
+		
+		// Testa se o usuário possui o peerfil passado em forma de String
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDecricao()));
 	}
 
 	
