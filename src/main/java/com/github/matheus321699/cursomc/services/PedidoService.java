@@ -3,11 +3,17 @@ package com.github.matheus321699.cursomc.services;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.security.sasl.AuthenticationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.matheus321699.cursomc.domain.Categoria;
+import com.github.matheus321699.cursomc.domain.Cliente;
 import com.github.matheus321699.cursomc.domain.ItemPedido;
 import com.github.matheus321699.cursomc.domain.PagamentoComBoleto;
 import com.github.matheus321699.cursomc.domain.Pedido;
@@ -15,6 +21,7 @@ import com.github.matheus321699.cursomc.domain.enums.EstadoPagamento;
 import com.github.matheus321699.cursomc.repositories.ItemPedidoRepository;
 import com.github.matheus321699.cursomc.repositories.PagamentoRepository;
 import com.github.matheus321699.cursomc.repositories.PedidoRepository;
+import com.github.matheus321699.cursomc.security.UserSS;
 import com.github.matheus321699.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -87,5 +94,24 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
+	}
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPage, String orderBy, String direction) throws AuthenticationException{
+		
+		// Pegando usuário autenticado
+		UserSS user = UserService.authenticated();
+		
+		// Verificando se o usuário está autenticado
+		if (user == null) {
+			throw new AuthenticationException("Acesso negado!");
+		}
+		
+		// Instanciando PageRequest
+		PageRequest pageRequest = PageRequest.of(page, linesPage, Direction.valueOf(direction), orderBy);
+	
+		// Retornando pedidos apenas do usuário logado
+		Cliente cliente = clienteService.find(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
+		
 	}
 }
