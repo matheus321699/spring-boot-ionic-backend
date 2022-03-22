@@ -60,7 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	private static final String[] PUBLIC_MATCHERS_POST = {
 			// Todo mundo que vim após esse caminho vai estar liberado
-			"/clientes/**"
+			"/clientes/**",
+			"/auth/forgot/**"
 	};
 	
 	@Override
@@ -80,10 +81,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
 		
-		// Permitindo somente o método HTTP POST nos caminhos no vetor PUBLIC_MATCHERS_GET
+		// Permitindo somente o método HTTP POST nos caminhos no vetor PUBLIC_MATCHERS_POST
 		.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 		
-		// Permitindo somente o método HTTP GET nos caminhos no vetor PUBLIC_MATCHERS_POST
+		// Permitindo somente o método HTTP GET nos caminhos no vetor PUBLIC_MATCHERS_GET
 		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
 		.anyRequest().authenticated();

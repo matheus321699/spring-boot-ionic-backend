@@ -2,6 +2,7 @@ package com.github.matheus321699.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
@@ -26,8 +27,8 @@ public class ClienteDTO implements Serializable{
 	@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
 	
-	@NotEmpty
-	@Length
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Email(message = "Email inválido")
 	private String email;
 	
 	public ClienteDTO() {

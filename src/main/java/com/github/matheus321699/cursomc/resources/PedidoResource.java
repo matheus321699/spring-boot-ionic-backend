@@ -3,6 +3,7 @@ package com.github.matheus321699.cursomc.resources;
 
 import java.net.URI;
 
+
 import javax.security.sasl.AuthenticationException;
 import javax.validation.Valid;
 
@@ -17,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.github.matheus321699.cursomc.domain.Categoria;
 import com.github.matheus321699.cursomc.domain.Pedido;
-import com.github.matheus321699.cursomc.dto.CategoriaDTO;
 import com.github.matheus321699.cursomc.services.PedidoService;
 
 @RestController
